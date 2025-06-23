@@ -1,0 +1,48 @@
+;
+; AegisDriver.inf
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider    = %ManufacturerName%
+CatalogFile = AegisDriver.cat
+DriverVer   =  06/17/2025,1.0.0.2
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+AegisDriver.sys = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[DefaultInstall.NT$ARCH$]
+CopyFiles = File_Copy
+
+[DefaultInstall.NT$ARCH$.Services]
+AddService = AegisDriver, %SPSVCINST_ASSOCSERVICE%, AegisDriver_Service_Inst
+
+[File_Copy]
+AegisDriver.sys
+
+[AegisDriver_Service_Inst]
+DisplayName    = %AegisDriver.SVCDESC%
+ServiceType    = 1
+StartType      = 2
+ErrorControl   = 1
+ServiceBinary  = %13%\AegisDriver.sys
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "Roshan"
+DiskName = "AegisDriver Installation Disk"
+AegisDriver.DeviceDesc = "AegisDriver Device"
+AegisDriver.SVCDESC = "AegisDriver Service"
